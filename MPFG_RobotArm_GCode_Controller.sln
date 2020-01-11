@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29403.142
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MPFG_RobotArm_GCode_Controller", "MPFG_RobotArm_GCode_Controller\MPFG_RobotArm_GCode_Controller.csproj", "{9155D7BA-F86B-4EC6-994D-2E0988C5E142}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9155D7BA-F86B-4EC6-994D-2E0988C5E142}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9155D7BA-F86B-4EC6-994D-2E0988C5E142}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9155D7BA-F86B-4EC6-994D-2E0988C5E142}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9155D7BA-F86B-4EC6-994D-2E0988C5E142}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {23ADF622-4E28-443C-AB1F-C57D415D7B5D}
+	EndGlobalSection
+EndGlobal
