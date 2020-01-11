@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -29,6 +30,8 @@ namespace MPFG_RobotArm_GCode_Controller
         int smallStep = 2;
         int bigStep = 10;
         string serialLog;
+        int stepValue = 2;
+        bool useBigStep = false;
 
         public MainWindow()
         {
@@ -49,6 +52,7 @@ namespace MPFG_RobotArm_GCode_Controller
             }
             robotSerial.Write(commandFixed + "\r");
             CommandField.Text = "";
+            CurrentXYZDisplay.Text = "X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ;
             serialLog = serialLog + "\n" + robotSerial.ReadLine().ToString();
             SerialLog.Text = serialLog;
         }
@@ -64,7 +68,7 @@ namespace MPFG_RobotArm_GCode_Controller
         private void EnablePower(object sender, RoutedEventArgs e)
         {
             SendCommand("M17");
-            SendCommand("G1" + homePosition);
+            SendCommand("G1 " + homePosition);
         }
 
         private void DisablePower(object sender, RoutedEventArgs e)
@@ -74,28 +78,92 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void SmallStepSize_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            if(SmallStepSize.Text.Length > 0)
             {
-                smallStep = Int32.Parse(SmallStepSize.Text);
-            }
-            catch (Exception)
-            {
-
-                throw;
+                Int32.TryParse(SmallStepSize.Text, out int newStepSize);
+                smallStep = newStepSize;
             }
         }
 
         private void BigStepSize_TextChanged(object sender, TextChangedEventArgs e)
         {
-            try
+            if(BigStepSize.Text.Length > 0)
             {
-                bigStep = Int32.Parse(BigStepSize.Text);
+                Int32.TryParse(BigStepSize.Text, out int newStepSize);
+                bigStep = newStepSize;
             }
-            catch (Exception)
-            {
+        }
 
-                throw;
+        private void ButtonXNeg_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosX = currentPosX - stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonXPos_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosX = currentPosX + stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonYNeg_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosY = currentPosY - stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonYPos_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosY = currentPosY + stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonZNeg_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosZ = currentPosZ - stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonZPos_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosZ = currentPosZ + stepSize();
+            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+        }
+
+        private void ButtonHome_Click(object sender, RoutedEventArgs e)
+        {
+            currentPosX = 0;
+            currentPosY = 120;
+            currentPosZ = 120;
+            SendCommand("G1 X0 Y120 Z120");
+        }
+
+        private void EnableBigSteps(object sender, RoutedEventArgs e)
+        {
+            stepValue = bigStep;
+        }
+
+        private void DisableBigSteps(object sender, RoutedEventArgs e)
+        {
+            stepValue = smallStep;
+        }
+
+        public int stepSize()
+        {
+            if (checkBoxUseBigSteps.IsChecked == true)
+            {
+                return bigStep;
             }
+            else
+            {
+                return smallStep;
+            }
+        }
+
+        private void NumberValidationTextBox(object sender, TextCompositionEventArgs e)
+        {
+            Regex regex = new Regex("[^0-9]+");
+            e.Handled = regex.IsMatch(e.Text);
         }
     }
 }
