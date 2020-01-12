@@ -10,6 +10,7 @@
         ZNeg,
         Home,
         Rest,
-        Bottom
+        Bottom,
+        Wait
     }
 }

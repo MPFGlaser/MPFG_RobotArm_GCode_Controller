@@ -32,9 +32,11 @@ namespace MPFG_RobotArm_GCode_Controller
         double currentPosZ = 63;
         int smallStep = 2;
         int bigStep = 10;
+        int waitTime = 5000;
         string serialLog;
         int stepValue = 2;
         bool useBigStep = false;
+        int movementSpeed = 100;
 
         public MainWindow()
         {
@@ -52,12 +54,16 @@ namespace MPFG_RobotArm_GCode_Controller
             if (!robotSerial.IsOpen)
             {
                 robotSerial.Open();
+                serialLog = serialLog + "Connection opened on " + robotSerial.PortName + " running on a baud rate of " + robotSerial.BaudRate;
+                SerialLog.Text = serialLog;
             }
             robotSerial.Write(commandFixed + "\r");
             CommandField.Text = "";
+            serialLog = serialLog + "\n tx: " + command;
             CurrentXYZDisplay.Text = "X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ;
-            serialLog = serialLog + "\n" + robotSerial.ReadLine().ToString();
+            serialLog = serialLog + "\n rx: " + robotSerial.ReadLine().ToString();
             SerialLog.Text = serialLog;
+            SerialLog.ScrollToEnd();
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -76,6 +82,7 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void DisablePower(object sender, RoutedEventArgs e)
         {
+            SendCommand("G1 " + homePosition);
             SendCommand("G1 " + restPosition);
             SendCommand("M18");
         }
@@ -89,12 +96,30 @@ namespace MPFG_RobotArm_GCode_Controller
             }
         }
 
+        private void WaitTime_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (WaitTime.Text.Length > 0)
+            {
+                int.TryParse(WaitTime.Text, out int newWaitTime);
+                waitTime = newWaitTime;
+            }
+        }
+
         private void BigStepSize_TextChanged(object sender, TextChangedEventArgs e)
         {
             if(BigStepSize.Text.Length > 0)
             {
                 int.TryParse(BigStepSize.Text, out int newStepSize);
                 bigStep = newStepSize;
+            }
+        }
+
+        private void MovementSpeed_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (BigStepSize.Text.Length > 0)
+            {
+                int.TryParse(MovementSpeed.Text, out int newSpeed);
+                movementSpeed = newSpeed;
             }
         }
 
@@ -106,45 +131,50 @@ namespace MPFG_RobotArm_GCode_Controller
             {
                 case ButtonAction.XPos:
                     currentPosX = currentPosX + stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.XNeg:
                     currentPosX = currentPosX - stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.YPos:
                     currentPosY = currentPosY + stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.YNeg:
                     currentPosY = currentPosY - stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.ZPos:
                     currentPosZ = currentPosZ + stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.ZNeg:
                     currentPosZ = currentPosZ - stepSize();
-                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ + " F" + movementSpeed);
                     break;
                 case ButtonAction.Home:
                     currentPosX = 0;
                     currentPosY = 120;
                     currentPosZ = 120;
-                    SendCommand("G1 " + homePosition);
+                    SendCommand("G1 " + homePosition + " F" + movementSpeed);
                     break;
                 case ButtonAction.Rest:
                     currentPosX = 0;
                     currentPosY = 25;
                     currentPosZ = 63;
-                    SendCommand("G1 " + restPosition);
+                    SendCommand("G1 " + homePosition + " F" + movementSpeed);
+                    SendCommand("G1 " + restPosition + " F" + movementSpeed);
                     break;
                 case ButtonAction.Bottom:
                     currentPosX = 0;
                     currentPosY = 131;
                     currentPosZ = -94;
-                    SendCommand("G1 " + bottomPosition);
+                    SendCommand("G1 " + homePosition + " F" + movementSpeed);
+                    SendCommand("G1 " + bottomPosition + " F" + movementSpeed);
+                    break;
+                case ButtonAction.Wait:
+                    SendCommand("G4 T" + waitTime);
                     break;
                 default:
                     break;

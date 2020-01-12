@@ -8,29 +8,36 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="CommandField" HorizontalAlignment="Left" Height="23" Margin="146,379,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="517" AutomationProperties.HelpText="Command" AutomationProperties.Name="CommandField" KeyDown="OnKeyDownHandler"/>
-        <Button Content="Send" HorizontalAlignment="Left" Margin="692,382,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
-        <CheckBox x:Name="CheckboxPower" Content="Robot Arm Power" HorizontalAlignment="Left" Margin="27,23,0,0" VerticalAlignment="Top" Checked="EnablePower"
+        <TextBox x:Name="CommandField" HorizontalAlignment="Left" Height="23" Margin="128,386,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="574" AutomationProperties.HelpText="Command" AutomationProperties.Name="CommandField" KeyDown="OnKeyDownHandler"/>
+        <Button Content="Send" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <CheckBox x:Name="CheckboxPower" Content="Robot Arm Power" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="EnablePower"
             Unchecked="DisablePower"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="201" Margin="569,51,0,0" VerticalAlignment="Top" Width="190">
-            <TextBox x:Name="SerialLog" HorizontalAlignment="Left" Height="23" Margin="629,155,0,0" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
-        </ScrollViewer>
-        <Label Content="Small Step Size:" HorizontalAlignment="Left" Margin="27,51,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="SmallStepSize" HorizontalAlignment="Left" Height="23" Margin="27,77,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="SmallStepSize_TextChanged" Text="2" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="Big Step Size:" HorizontalAlignment="Left" Margin="27,104,0,0" VerticalAlignment="Top"/>
-        <TextBox x:Name="BigStepSize" HorizontalAlignment="Left" Height="23" Margin="27,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="BigStepSize_TextChanged" Text="10" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="Current Position&#xD;&#xA;" HorizontalAlignment="Left" Margin="243,86,0,0" VerticalAlignment="Top" Height="25"/>
-        <TextBlock x:Name="CurrentXYZDisplay" HorizontalAlignment="Left" Margin="243,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="285" FontSize="24" Text="X??? Y??? Z???"/>
-        <Button x:Name="ButtonXPos" Content="X+" HorizontalAlignment="Left" Margin="107,215,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XPos }"/>
-        <Button x:Name="ButtonXNeg" Content="X-" HorizontalAlignment="Left" Margin="27,215,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XNeg }"/>
-        <Button x:Name="ButtonYPos" Content="Y+" HorizontalAlignment="Left" Margin="67,174,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YPos }"/>
-        <Button x:Name="ButtonYNeg" Content="Y-" HorizontalAlignment="Left" Margin="67,255,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YNeg }"/>
-        <Button x:Name="ButtonZNeg" Content="Z-" HorizontalAlignment="Left" Margin="27,255,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZNeg }"/>
-        <Button x:Name="ButtonZPos" Content="Z+" HorizontalAlignment="Left" Margin="27,174,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZPos }"/>
-        <Button x:Name="ButtonHome" Content="HOME" HorizontalAlignment="Left" Margin="67,215,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Home }"/>
-        <Button x:Name="ButtonRest" Content="REST" HorizontalAlignment="Left" Margin="107,174,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Rest }"/>
-        <Button x:Name="ButtonBottom" Content="BOTTOM" HorizontalAlignment="Left" Margin="107,255,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Bottom }"/>
-        <CheckBox x:Name="checkBoxUseBigSteps" Content="Use Big Steps" HorizontalAlignment="Left" Margin="27,293,0,0" VerticalAlignment="Top" Checked="EnableBigSteps"
+        <Border BorderBrush="Black" BorderThickness="1" Margin="128,120,44,43">
+            <TextBox x:Name="SerialLog" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible"/>
+        </Border>
+
+
+
+        <Label Content="Small Step Size:" HorizontalAlignment="Left" Margin="10,30,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="SmallStepSize" HorizontalAlignment="Left" Height="23" Margin="10,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="SmallStepSize_TextChanged" Text="2" PreviewTextInput="NumberValidationTextBox"/>
+        <Label Content="Big Step Size:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="BigStepSize" HorizontalAlignment="Left" Height="23" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="BigStepSize_TextChanged" Text="10" PreviewTextInput="NumberValidationTextBox"/>
+        <Label Content="Current Position&#xD;&#xA;" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Height="25"/>
+        <TextBlock x:Name="CurrentXYZDisplay" HorizontalAlignment="Left" Margin="165,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="285" FontSize="24" Text="X??? Y??? Z???"/>
+        <Button x:Name="ButtonXPos" Content="X+" HorizontalAlignment="Left" Margin="90,336,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XPos }"/>
+        <Button x:Name="ButtonXNeg" Content="X-" HorizontalAlignment="Left" Margin="10,336,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XNeg }"/>
+        <Button x:Name="ButtonYPos" Content="Y+" HorizontalAlignment="Left" Margin="50,295,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YPos }"/>
+        <Button x:Name="ButtonYNeg" Content="Y-" HorizontalAlignment="Left" Margin="50,376,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YNeg }"/>
+        <Button x:Name="ButtonZNeg" Content="Z-" HorizontalAlignment="Left" Margin="10,376,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZNeg }"/>
+        <Button x:Name="ButtonZPos" Content="Z+" HorizontalAlignment="Left" Margin="10,295,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZPos }"/>
+        <Button x:Name="ButtonHome" Content="HOME" HorizontalAlignment="Left" Margin="50,336,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Home }"/>
+        <Button x:Name="ButtonRest" Content="REST" HorizontalAlignment="Left" Margin="90,295,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Rest }"/>
+        <Button x:Name="ButtonBottom" Content="BOTTOM" HorizontalAlignment="Left" Margin="90,376,0,0" VerticalAlignment="Top" Width="33" Height="33" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Bottom }"/>
+        <CheckBox x:Name="checkBoxUseBigSteps" Content="Use Big Steps" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" Checked="EnableBigSteps"
             Unchecked="DisableBigSteps"/>
+        <Button x:Name="ButtonWait" Content="Wait (in seconds)" HorizontalAlignment="Left" Margin="10,275,0,0" VerticalAlignment="Top" Width="73" Click="ButtonClick" CommandParameter="{x:Static Models:ButtonAction.Wait}" Height="15" FontSize="9"/>
+        <TextBox x:Name="WaitTime" HorizontalAlignment="Left" Height="15" Margin="90,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="33" Text="10" PreviewTextInput="NumberValidationTextBox" FontSize="10" TextChanged="WaitTime_TextChanged"/>
+        <Label Content="Speed (mm/s)" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top"/>
+        <TextBox x:Name="MovementSpeed" HorizontalAlignment="Left" Height="23" Margin="10,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Text="100" PreviewTextInput="NumberValidationTextBox" TextChanged="MovementSpeed_TextChanged"/>
     </Grid>
 </Window>
