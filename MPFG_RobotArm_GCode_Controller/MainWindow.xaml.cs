@@ -25,9 +25,11 @@ namespace MPFG_RobotArm_GCode_Controller
     {
         SerialPort robotSerial = new SerialPort("COM5", 9600);
         string homePosition = "X0 Y120 Z120";
+        string restPosition = "X0 Y25 Z63";
+        string bottomPosition = "X0 Y131 Z-94";
         double currentPosX = 0;
-        double currentPosY = 120;
-        double currentPosZ = 120;
+        double currentPosY = 25;
+        double currentPosZ = 63;
         int smallStep = 2;
         int bigStep = 10;
         string serialLog;
@@ -68,12 +70,13 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void EnablePower(object sender, RoutedEventArgs e)
         {
+            SendCommand("G1 " + restPosition);
             SendCommand("M17");
-            SendCommand("G1 " + homePosition);
         }
 
         private void DisablePower(object sender, RoutedEventArgs e)
         {
+            SendCommand("G1 " + restPosition);
             SendCommand("M18");
         }
 
@@ -81,7 +84,7 @@ namespace MPFG_RobotArm_GCode_Controller
         {
             if(SmallStepSize.Text.Length > 0)
             {
-                Int32.TryParse(SmallStepSize.Text, out int newStepSize);
+                int.TryParse(SmallStepSize.Text, out int newStepSize);
                 smallStep = newStepSize;
             }
         }
@@ -90,7 +93,7 @@ namespace MPFG_RobotArm_GCode_Controller
         {
             if(BigStepSize.Text.Length > 0)
             {
-                Int32.TryParse(BigStepSize.Text, out int newStepSize);
+                int.TryParse(BigStepSize.Text, out int newStepSize);
                 bigStep = newStepSize;
             }
         }
@@ -102,7 +105,7 @@ namespace MPFG_RobotArm_GCode_Controller
             switch (parameter)
             {
                 case ButtonAction.XPos:
-                    currentPosX = currentPosX - stepSize();
+                    currentPosX = currentPosX + stepSize();
                     SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
                     break;
                 case ButtonAction.XNeg:
@@ -129,7 +132,19 @@ namespace MPFG_RobotArm_GCode_Controller
                     currentPosX = 0;
                     currentPosY = 120;
                     currentPosZ = 120;
-                    SendCommand("G1 X0 Y120 Z120");
+                    SendCommand("G1 " + homePosition);
+                    break;
+                case ButtonAction.Rest:
+                    currentPosX = 0;
+                    currentPosY = 25;
+                    currentPosZ = 63;
+                    SendCommand("G1 " + restPosition);
+                    break;
+                case ButtonAction.Bottom:
+                    currentPosX = 0;
+                    currentPosY = 131;
+                    currentPosZ = -94;
+                    SendCommand("G1 " + bottomPosition);
                     break;
                 default:
                     break;

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace MPFG_RobotArm_GCode_Controller.Models
+﻿namespace MPFG_RobotArm_GCode_Controller.Models
 {
     public enum ButtonAction
     {
@@ -14,6 +8,8 @@ namespace MPFG_RobotArm_GCode_Controller.Models
         YNeg,
         ZPos,
         ZNeg,
-        Home
+        Home,
+        Rest,
+        Bottom
     }
 }
