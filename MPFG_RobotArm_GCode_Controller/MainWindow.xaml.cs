@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MPFG_RobotArm_GCode_Controller.Models;
+using System;
 using System.Collections.Generic;
 using System.IO.Ports;
 using System.Linq;
@@ -94,48 +95,45 @@ namespace MPFG_RobotArm_GCode_Controller
             }
         }
 
-        private void ButtonXNeg_Click(object sender, RoutedEventArgs e)
+        private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            currentPosX = currentPosX - stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonXPos_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosX = currentPosX + stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonYNeg_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosY = currentPosY - stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonYPos_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosY = currentPosY + stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonZNeg_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosZ = currentPosZ - stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonZPos_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosZ = currentPosZ + stepSize();
-            SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
-        }
-
-        private void ButtonHome_Click(object sender, RoutedEventArgs e)
-        {
-            currentPosX = 0;
-            currentPosY = 120;
-            currentPosZ = 120;
-            SendCommand("G1 X0 Y120 Z120");
+            var typedSender = (Button) sender;
+            var parameter = (ButtonAction)typedSender.CommandParameter;
+            switch (parameter)
+            {
+                case ButtonAction.XPos:
+                    currentPosX = currentPosX - stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.XNeg:
+                    currentPosX = currentPosX - stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.YPos:
+                    currentPosY = currentPosY + stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.YNeg:
+                    currentPosY = currentPosY - stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.ZPos:
+                    currentPosZ = currentPosZ + stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.ZNeg:
+                    currentPosZ = currentPosZ - stepSize();
+                    SendCommand("G1" + " X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ);
+                    break;
+                case ButtonAction.Home:
+                    currentPosX = 0;
+                    currentPosY = 120;
+                    currentPosZ = 120;
+                    SendCommand("G1 X0 Y120 Z120");
+                    break;
+                default:
+                    break;
+            }
         }
 
         private void EnableBigSteps(object sender, RoutedEventArgs e)

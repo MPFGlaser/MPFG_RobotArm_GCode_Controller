@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Models="clr-namespace:MPFG_RobotArm_GCode_Controller.Models"
         xmlns:local="clr-namespace:MPFG_RobotArm_GCode_Controller"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
@@ -20,13 +21,13 @@
         <TextBox x:Name="BigStepSize" HorizontalAlignment="Left" Height="23" Margin="27,130,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="BigStepSize_TextChanged" Text="10" PreviewTextInput="NumberValidationTextBox"/>
         <Label Content="Current Position&#xD;&#xA;" HorizontalAlignment="Left" Margin="243,86,0,0" VerticalAlignment="Top" Height="25"/>
         <TextBlock x:Name="CurrentXYZDisplay" HorizontalAlignment="Left" Margin="243,117,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="285" FontSize="24" Text="X??? Y??? Z???"/>
-        <Button x:Name="ButtonXPos" Content="X+" HorizontalAlignment="Left" Margin="87,205,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonXPos_Click"/>
-        <Button x:Name="ButtonXNeg" Content="X-" HorizontalAlignment="Left" Margin="27,205,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonXNeg_Click"/>
-        <Button x:Name="ButtonYPos" Content="Y+" HorizontalAlignment="Left" Margin="57,174,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonYPos_Click"/>
-        <Button x:Name="ButtonYNeg" Content="Y-" HorizontalAlignment="Left" Margin="57,235,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonYNeg_Click"/>
-        <Button x:Name="ButtonZNeg" Content="Z-" HorizontalAlignment="Left" Margin="27,235,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonZNeg_Click"/>
-        <Button x:Name="ButtonZPos" Content="Z+" HorizontalAlignment="Left" Margin="27,174,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonZPos_Click"/>
-        <Button x:Name="ButtonHome" Content="HOME" HorizontalAlignment="Left" Margin="57,205,0,0" VerticalAlignment="Top" Width="25" Height="25" FontSize="7" Click="ButtonHome_Click"/>
+        <Button x:Name="ButtonXPos" Content="X+" HorizontalAlignment="Left" Margin="87,205,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XPos }"/>
+        <Button x:Name="ButtonXNeg" Content="X-" HorizontalAlignment="Left" Margin="27,205,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XNeg }"/>
+        <Button x:Name="ButtonYPos" Content="Y+" HorizontalAlignment="Left" Margin="57,174,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YPos }"/>
+        <Button x:Name="ButtonYNeg" Content="Y-" HorizontalAlignment="Left" Margin="57,235,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YNeg }"/>
+        <Button x:Name="ButtonZNeg" Content="Z-" HorizontalAlignment="Left" Margin="27,235,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZNeg }"/>
+        <Button x:Name="ButtonZPos" Content="Z+" HorizontalAlignment="Left" Margin="27,174,0,0" VerticalAlignment="Top" Width="25" Height="25" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.ZPos }"/>
+        <Button x:Name="ButtonHome" Content="HOME" HorizontalAlignment="Left" Margin="57,205,0,0" VerticalAlignment="Top" Width="25" Height="25" FontSize="7" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.Home }"/>
         <CheckBox x:Name="checkBoxUseBigSteps" Content="Use Big Steps" HorizontalAlignment="Left" Margin="27,265,0,0" VerticalAlignment="Top" Checked="EnableBigSteps"
             Unchecked="DisableBigSteps"/>
     </Grid>
