@@ -37,6 +37,7 @@ namespace MPFG_RobotArm_GCode_Controller
         int stepValue = 2;
         bool useBigStep = false;
         int movementSpeed = 100;
+        string[] commandQueue;
 
         public MainWindow()
         {
@@ -123,6 +124,11 @@ namespace MPFG_RobotArm_GCode_Controller
             }
         }
 
+        private void CommandQueue_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            commandQueue = CommandQueue.Text.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+        }
+
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
             var typedSender = (Button) sender;
@@ -175,6 +181,12 @@ namespace MPFG_RobotArm_GCode_Controller
                     break;
                 case ButtonAction.Wait:
                     SendCommand("G4 T" + waitTime);
+                    break;
+                case ButtonAction.SendSequence:
+                    foreach (var cmd in commandQueue)
+                    {
+                        SendCommand(cmd + " F" + movementSpeed);
+                    }
                     break;
                 default:
                     break;

@@ -8,12 +8,15 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="CommandField" HorizontalAlignment="Left" Height="23" Margin="128,386,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="574" AutomationProperties.HelpText="Command" AutomationProperties.Name="CommandField" KeyDown="OnKeyDownHandler"/>
-        <Button Content="Send" HorizontalAlignment="Left" Margin="707,389,0,0" VerticalAlignment="Top" Width="75" Click="Button_Click"/>
+        <TextBox x:Name="CommandField" HorizontalAlignment="Left" Height="23" Margin="532,386,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="204" AutomationProperties.HelpText="Command" AutomationProperties.Name="CommandField" KeyDown="OnKeyDownHandler"/>
+        <Button Content="Send" HorizontalAlignment="Left" Margin="741,386,0,0" VerticalAlignment="Top" Width="41" Click="Button_Click" Height="23"/>
         <CheckBox x:Name="CheckboxPower" Content="Robot Arm Power" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Checked="EnablePower"
             Unchecked="DisablePower"/>
-        <Border BorderBrush="Black" BorderThickness="1" Margin="128,120,44,43">
-            <TextBox x:Name="SerialLog" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible"/>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="532,30,10,43" Width="250">
+            <TextBox x:Name="SerialLog" Margin="0" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" IsReadOnly="True"/>
+        </Border>
+        <Border BorderBrush="Black" BorderThickness="1" Margin="277,84,265,43" Width="250">
+            <TextBox x:Name="CommandQueue" Padding="0" ScrollViewer.CanContentScroll="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Visible" Margin="0" TextChanged="CommandQueue_TextChanged" AcceptsReturn="True"/>
         </Border>
 
 
@@ -22,8 +25,8 @@
         <TextBox x:Name="SmallStepSize" HorizontalAlignment="Left" Height="23" Margin="10,56,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="SmallStepSize_TextChanged" Text="2" PreviewTextInput="NumberValidationTextBox"/>
         <Label Content="Big Step Size:" HorizontalAlignment="Left" Margin="10,84,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="BigStepSize" HorizontalAlignment="Left" Height="23" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" TextChanged="BigStepSize_TextChanged" Text="10" PreviewTextInput="NumberValidationTextBox"/>
-        <Label Content="Current Position&#xD;&#xA;" HorizontalAlignment="Left" Margin="165,10,0,0" VerticalAlignment="Top" Height="25"/>
-        <TextBlock x:Name="CurrentXYZDisplay" HorizontalAlignment="Left" Margin="165,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="285" FontSize="24" Text="X??? Y??? Z???"/>
+        <Label Content="Current Position&#xD;&#xA;" HorizontalAlignment="Left" Margin="277,15,0,0" VerticalAlignment="Top" Height="25"/>
+        <TextBlock x:Name="CurrentXYZDisplay" HorizontalAlignment="Left" Margin="277,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="36" Width="250" FontSize="24" Text="X??? Y??? Z???"/>
         <Button x:Name="ButtonXPos" Content="X+" HorizontalAlignment="Left" Margin="90,336,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XPos }"/>
         <Button x:Name="ButtonXNeg" Content="X-" HorizontalAlignment="Left" Margin="10,336,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.XNeg }"/>
         <Button x:Name="ButtonYPos" Content="Y+" HorizontalAlignment="Left" Margin="50,295,0,0" VerticalAlignment="Top" Width="33" Height="33" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.YPos }"/>
@@ -39,5 +42,7 @@
         <TextBox x:Name="WaitTime" HorizontalAlignment="Left" Height="15" Margin="90,275,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="33" Text="10" PreviewTextInput="NumberValidationTextBox" FontSize="10" TextChanged="WaitTime_TextChanged"/>
         <Label Content="Speed (mm/s)" HorizontalAlignment="Left" Margin="10,176,0,0" VerticalAlignment="Top"/>
         <TextBox x:Name="MovementSpeed" HorizontalAlignment="Left" Height="23" Margin="10,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Text="100" PreviewTextInput="NumberValidationTextBox" TextChanged="MovementSpeed_TextChanged"/>
+        <Button x:Name="ButtonAddPosition" Content="Add Position" HorizontalAlignment="Left" Margin="299,386,0,0" VerticalAlignment="Top" Width="100"/>
+        <Button x:Name="ButtonSendSequence" Content="Send Sequence" HorizontalAlignment="Left" Margin="404,386,0,0" VerticalAlignment="Top" Width="100" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.SendSequence }"/>
     </Grid>
 </Window>

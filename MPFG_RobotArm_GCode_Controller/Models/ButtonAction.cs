@@ -11,6 +11,7 @@
         Home,
         Rest,
         Bottom,
-        Wait
+        Wait,
+        SendSequence
     }
 }
