@@ -35,7 +35,6 @@ namespace MPFG_RobotArm_GCode_Controller
         int waitTime = 5000;
         string serialLog;
         int stepValue = 2;
-        bool useBigStep = false;
         int movementSpeed = 100;
         string[] commandQueue;
         string[] comPortNames;
