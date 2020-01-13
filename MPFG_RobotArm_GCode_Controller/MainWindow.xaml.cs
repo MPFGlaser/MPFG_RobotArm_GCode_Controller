@@ -23,7 +23,7 @@ namespace MPFG_RobotArm_GCode_Controller
     /// </summary>
     public partial class MainWindow : Window
     {
-        SerialPort robotSerial = new SerialPort("COM5", 9600);
+        SerialPort robotSerial;
         string homePosition = "X0 Y120 Z120";
         string restPosition = "X0 Y25 Z63";
         string bottomPosition = "X0 Y131 Z-94";
@@ -38,10 +38,49 @@ namespace MPFG_RobotArm_GCode_Controller
         bool useBigStep = false;
         int movementSpeed = 100;
         string[] commandQueue;
+        string[] comPortNames;
+
 
         public MainWindow()
         {
             InitializeComponent();
+            comPortNames = SerialPort.GetPortNames();
+            comboBoxComPort.ItemsSource = comPortNames;
+        }
+
+        public void ConnectSerialCom()
+        {
+            try
+            {
+                robotSerial = new SerialPort(comboBoxComPort.SelectedItem.ToString(), int.Parse(comboBoxBaudRate.Text));
+                robotSerial.ReadTimeout = 2500;
+                robotSerial.WriteTimeout = 2500;
+                if (!robotSerial.IsOpen)
+                {
+                    robotSerial.Open();
+                    Log("Connection opened on " + robotSerial.PortName + " running on a baud rate of " + robotSerial.BaudRate);
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public bool ConnectionEstablished()
+        {
+            bool connected = false;
+            if (robotSerial.IsOpen)
+            {
+                connected = true;
+            }
+            return connected;
+        }
+
+        private void comSettings_Changed(object sender, SelectionChangedEventArgs e)
+        {
+
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -52,19 +91,11 @@ namespace MPFG_RobotArm_GCode_Controller
         private void SendCommand(string command)
         {
             string commandFixed = command.ToUpper();
-            if (!robotSerial.IsOpen)
-            {
-                robotSerial.Open();
-                serialLog = serialLog + "Connection opened on " + robotSerial.PortName + " running on a baud rate of " + robotSerial.BaudRate;
-                SerialLog.Text = serialLog;
-            }
             robotSerial.Write(commandFixed + "\r");
             CommandField.Text = "";
-            serialLog = serialLog + "\n tx: " + command;
+            Log(LogType.tx, command);
             CurrentXYZDisplay.Text = "X" + currentPosX + " Y" + currentPosY + " Z" + currentPosZ;
-            serialLog = serialLog + "\n rx: " + robotSerial.ReadLine().ToString();
-            SerialLog.Text = serialLog;
-            SerialLog.ScrollToEnd();
+            Log(LogType.rx, robotSerial.ReadLine().ToString());
         }
 
         private void OnKeyDownHandler(object sender, KeyEventArgs e)
@@ -77,8 +108,19 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void EnablePower(object sender, RoutedEventArgs e)
         {
-            SendCommand("G1 " + restPosition);
-            SendCommand("M17");
+            ConnectSerialCom();
+            if (ConnectionEstablished())
+            {
+                SendCommand("G1 " + restPosition);
+                SendCommand("M17");
+            }
+            else
+            {
+                // this doesn't fire even if wrong comport is selected, because it will still be open. Need to check for identification perhaps?
+                CheckboxPower.IsChecked = false;
+                Log(LogType.ERROR, "Connecting failed.\nHave you selected the correct\nCOM port and baud rate?");
+            }
+
         }
 
         private void DisablePower(object sender, RoutedEventArgs e)
@@ -86,6 +128,7 @@ namespace MPFG_RobotArm_GCode_Controller
             SendCommand("G1 " + homePosition);
             SendCommand("G1 " + restPosition);
             SendCommand("M18");
+            robotSerial.Close();
         }
 
         private void SmallStepSize_TextChanged(object sender, TextChangedEventArgs e)
@@ -226,6 +269,31 @@ namespace MPFG_RobotArm_GCode_Controller
         {
             Regex regex = new Regex("[^0-9]+");
             e.Handled = regex.IsMatch(e.Text);
+        }
+
+        private void Log(string message)
+        {
+            serialLog = serialLog + "\n" + message;
+            SerialLog.Text = serialLog;
+            SerialLog.ScrollToEnd();
+        }
+
+        private void Log (Enum LogTypes, string message)
+        {
+            switch (LogTypes)
+            {
+                case Models.LogType.tx:
+                    serialLog = serialLog + "\ntx: " + message;
+                    break;
+                case Models.LogType.rx:
+                    serialLog = serialLog + "\nrx: " + message;
+                    break;
+                case Models.LogType.ERROR:
+                    serialLog = serialLog + "\nERROR: " + message;
+                    break;
+            };
+            SerialLog.Text = serialLog;
+            SerialLog.ScrollToEnd();
         }
     }
 }

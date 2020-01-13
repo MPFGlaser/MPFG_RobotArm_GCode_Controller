@@ -44,5 +44,24 @@
         <TextBox x:Name="MovementSpeed" HorizontalAlignment="Left" Height="23" Margin="10,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" Text="100" PreviewTextInput="NumberValidationTextBox" TextChanged="MovementSpeed_TextChanged"/>
         <Button x:Name="ButtonAddPosition" Content="Add Position" HorizontalAlignment="Left" Margin="299,386,0,0" VerticalAlignment="Top" Width="100"/>
         <Button x:Name="ButtonSendSequence" Content="Send Sequence" HorizontalAlignment="Left" Margin="404,386,0,0" VerticalAlignment="Top" Width="100" Click="ButtonClick" CommandParameter="{ x:Static Models:ButtonAction.SendSequence }"/>
+        <ComboBox x:Name="comboBoxComPort" HorizontalAlignment="Left" Margin="127,111,0,0" VerticalAlignment="Top" Width="75" SelectionChanged="comSettings_Changed"/>
+        <Label x:Name="label" Content="Select port&#xD;&#xA;" HorizontalAlignment="Left" Margin="127,84,0,0" VerticalAlignment="Top" Height="26"/>
+        <ComboBox x:Name="comboBoxBaudRate" HorizontalAlignment="Left" Margin="127,56,0,0" VerticalAlignment="Top" Width="75" SelectionChanged="comSettings_Changed">
+            <ComboBoxItem Content="110"/>
+            <ComboBoxItem Content="300"/>
+            <ComboBoxItem Content="600"/>
+            <ComboBoxItem Content="1200"/>
+            <ComboBoxItem Content="2400"/>
+            <ComboBoxItem Content="4800"/>
+            <ComboBoxItem Content="9600" IsSelected="True"/>
+            <ComboBoxItem Content="14400"/>
+            <ComboBoxItem Content="19200"/>
+            <ComboBoxItem Content="38400"/>
+            <ComboBoxItem Content="57600"/>
+            <ComboBoxItem Content="115200"/>
+            <ComboBoxItem Content="128000"/>
+            <ComboBoxItem Content="256000"/>
+        </ComboBox>
+        <Label x:Name="label1" Content="Baud rate:&#xD;&#xA;" HorizontalAlignment="Left" Margin="127,30,0,0" VerticalAlignment="Top" Height="26"/>
     </Grid>
 </Window>
