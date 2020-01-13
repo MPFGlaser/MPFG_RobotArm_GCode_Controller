@@ -90,7 +90,7 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void SmallStepSize_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(SmallStepSize.Text.Length > 0)
+            if (SmallStepSize.Text.Length > 0)
             {
                 int.TryParse(SmallStepSize.Text, out int newStepSize);
                 smallStep = newStepSize;
@@ -108,7 +108,7 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void BigStepSize_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(BigStepSize.Text.Length > 0)
+            if (BigStepSize.Text.Length > 0)
             {
                 int.TryParse(BigStepSize.Text, out int newStepSize);
                 bigStep = newStepSize;
@@ -131,7 +131,7 @@ namespace MPFG_RobotArm_GCode_Controller
 
         private void ButtonClick(object sender, RoutedEventArgs e)
         {
-            var typedSender = (Button) sender;
+            var typedSender = (Button)sender;
             var parameter = (ButtonAction)typedSender.CommandParameter;
             switch (parameter)
             {
@@ -185,7 +185,14 @@ namespace MPFG_RobotArm_GCode_Controller
                 case ButtonAction.SendSequence:
                     foreach (var cmd in commandQueue)
                     {
-                        SendCommand(cmd + " F" + movementSpeed);
+                        if (cmd.Contains("F"))
+                        {
+                            SendCommand(cmd);
+                        }
+                        else
+                        {
+                            SendCommand(cmd + " F" + movementSpeed);
+                        }
                     }
                     break;
                 default:
