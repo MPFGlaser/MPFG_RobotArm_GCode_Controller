@@ -277,17 +277,17 @@ namespace MPFG_RobotArm_GCode_Controller
             SerialLog.ScrollToEnd();
         }
 
-        private void Log (Enum LogTypes, string message)
+        private void Log(LogType logType, string message)
         {
-            switch (LogTypes)
+            switch (logType)
             {
-                case Models.LogType.tx:
+                case LogType.tx:
                     serialLog = serialLog + "\ntx: " + message;
                     break;
-                case Models.LogType.rx:
+                case LogType.rx:
                     serialLog = serialLog + "\nrx: " + message;
                     break;
-                case Models.LogType.ERROR:
+                case LogType.ERROR:
                     serialLog = serialLog + "\nERROR: " + message;
                     break;
             };
