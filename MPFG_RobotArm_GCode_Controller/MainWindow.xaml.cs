@@ -52,8 +52,8 @@ namespace MPFG_RobotArm_GCode_Controller
             try
             {
                 robotSerial = new SerialPort(comboBoxComPort.SelectedItem.ToString(), int.Parse(comboBoxBaudRate.Text));
-                robotSerial.ReadTimeout = 2500;
-                robotSerial.WriteTimeout = 2500;
+                //robotSerial.ReadTimeout = 2500;
+                //robotSerial.WriteTimeout = 2500;
                 if (!robotSerial.IsOpen)
                 {
                     robotSerial.Open();
